@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de Control de Calificaciones</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="contenedor">
+    <h1>Sistema de Control de Calificaciones</h1>
+
+    <div class="seccion-arriba">
+      <div class="formulario">
+        <h2>Registro de Estudiante</h2>
+        <input type="hidden" id="index-editar">
+        
+        <label>Número de Cuenta</label>
+        <input type="text" id="cuenta">
+
+        <label>Nombre del Estudiante</label>
+        <input type="text" id="nombre">
+
+        <label>Asignatura</label>
+        <input type="text" id="asignatura">
+
+        <label>Nota I Parcial</label>
+        <input type="number" id="nota1" min="0" max="100">
+
+        <label>Nota II Parcial</label>
+        <input type="number" id="nota2" min="0" max="100">
+
+        <label>Nota III Parcial</label>
+        <input type="number" id="nota3" min="0" max="100">
+
+        <button id="btn-guardar" onclick="guardarEstudiante()">Agregar Registro</button>
+        <button id="btn-cancelar" onclick="limpiarFormulario()" style="display:none; background-color: #6c757d;">Cancelar</button>
+      </div>
+
+      <div class="resumen">
+        <h2>Resumen Estadístico</h2>
+        <div class="tarjeta-resumen">Total Estudiantes: <span id="resumen-total">0</span></div>
+        <div class="tarjeta-resumen">Aprobados: <span id="resumen-aprobados">0</span></div>
+        <div class="tarjeta-resumen">Reprobados: <span id="resumen-reprobados">0</span></div>
+        <div class="tarjeta-resumen">Promedio General: <span id="resumen-promedio">0</span></div>
+      </div>
+    </div>
+
+    <div class="seccion-tabla">
+      <h2>Listado de Estudiantes</h2>
+      <input type="text" id="buscar" placeholder="Buscar por nombre..." oninput="actualizarTabla()">
+
+      <table id="tabla-estudiantes">
+        <thead>
+          <tr>
+            <th>Cuenta</th>
+            <th>Nombre</th>
+            <th>Asignatura</th>
+            <th>Parcial I</th>
+            <th>Parcial II</th>
+            <th>Parcial III</th>
+            <th>Promedio</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Los datos se cargan con JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

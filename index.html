@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Sistema de Control de Calificaciones</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -33,8 +33,8 @@
         <label>Nota III Parcial</label>
         <input type="number" id="nota3" min="0" max="100">
 
-        <button id="btn-guardar" onclick="guardarEstudiante()">Agregar Registro</button>
-        <button id="btn-cancelar" onclick="limpiarFormulario()" style="display:none; background-color: #6c757d;">Cancelar</button>
+        <button id="btn-guardar">Agregar Registro</button>
+        <button id="btn-cancelar" style="display:none; background-color: #6c757d;">Cancelar</button>
       </div>
 
       <div class="resumen">
@@ -48,7 +48,7 @@
 
     <div class="seccion-tabla">
       <h2>Listado de Estudiantes</h2>
-      <input type="text" id="buscar" placeholder="Buscar por nombre..." oninput="actualizarTabla()">
+      <input type="text" id="buscar" placeholder="Buscar por nombre...">
 
       <table id="tabla-estudiantes">
         <thead>
@@ -65,12 +65,11 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Los datos se cargan con JavaScript -->
-        </tbody>
+          </tbody>
       </table>
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script src="renderer.js"></script>
 </body>
 </html>

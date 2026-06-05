@@ -1,5 +1,12 @@
 let estudiantes = [];
 
+// Espera a que el DOM este completamente cargado para vincular los elementos
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-guardar').addEventListener('click', guardarEstudiante);
+  document.getElementById('btn-cancelar').addEventListener('click', limpiarFormulario);
+  document.getElementById('buscar').addEventListener('input', actualizarTabla);
+});
+
 function guardarEstudiante() {
   const cuenta = document.getElementById('cuenta').value.trim();
   const nombre = document.getElementById('nombre').value.trim();
@@ -18,8 +25,8 @@ function guardarEstudiante() {
   const nota2 = parseFloat(nota2Txt);
   const nota3 = parseFloat(nota3Txt);
 
-  if (nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100) {
-    alert("Las notas deben estar entre 0 y 100.");
+  if (isNaN(nota1) || isNaN(nota2) || isNaN(nota3) || nota1 < 0 || nota1 > 100 || nota2 < 0 || nota2 > 100 || nota3 < 0 || nota3 > 100) {
+    alert("Las notas deben ser numeros validos entre 0 y 100.");
     return;
   }
 
@@ -46,15 +53,14 @@ function actualizarTabla() {
   let totalAprobados = 0;
   let totalReprobados = 0;
   let sumaPromedios = 0;
-  let conteoValidos = 0;
 
-  estudiantes.forEach((estudiante, index) => {
-    
+  estudiantes.forEach((estudiante) => {
     if (estudiante.estado === "Aprobado") totalAprobados++;
     if (estudiante.estado === "Reprobado") totalReprobados++;
     sumaPromedios += estudiante.promedio;
-    conteoValidos++;
+  });
 
+  estudiantes.forEach((estudiante, index) => {
     if (estudiante.nombre.toLowerCase().includes(filtro)) {
       const fila = document.createElement('tr');
 
@@ -68,15 +74,30 @@ function actualizarTabla() {
         <td>${estudiante.promedio}</td>
         <td class="${estudiante.estado.toLowerCase()}">${estudiante.estado}</td>
         <td>
-          <button class="btn-editar" onclick="cargarEditar(${index})">Editar</button>
-          <button class="btn-eliminar" onclick="eliminarEstudiante(${index})">Eliminar</button>
+          <button class="btn-editar" data-index="${index}">Editar</button>
+          <button class="btn-eliminar" data-index="${index}">Eliminar</button>
         </td>
       `;
       tbody.appendChild(fila);
     }
   });
 
-  const promedioGeneral = conteoValidos > 0 ? (sumaPromedios / conteoValidos).toFixed(2) : 0;
+  // Asignar los eventos a los botones dinamicos despues de crearlos en la tabla
+  document.querySelectorAll('.btn-editar').forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-index');
+      cargarEditar(idx);
+    });
+  });
+
+  document.querySelectorAll('.btn-eliminar').forEach(boton => {
+    boton.addEventListener('click', (e) => {
+      const idx = e.target.getAttribute('data-index');
+      eliminarEstudiante(idx);
+    });
+  });
+
+  const promedioGeneral = estudiantes.length > 0 ? (sumaPromedios / estudiantes.length).toFixed(2) : "0.00";
 
   document.getElementById('resumen-total').innerText = estudiantes.length;
   document.getElementById('resumen-aprobados').innerText = totalAprobados;
